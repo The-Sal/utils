@@ -1,6 +1,3 @@
-'''
- pip3 install /Users/Sal/PycharmProjects/utils/dist/utils-1.0-py2.py3-none-any.whl --force-reinstall
-'''
 import setuptools
 setuptools.setup(
      name='utils',
