@@ -1,5 +1,5 @@
 import json
-def write_to_new_js(data, file_name):
+def write_new_js(data, file_name):
     with open('{}.json'.format(file_name), 'w+') as file:
         file.seek(0)
         json.dump(data, file, indent=4)
