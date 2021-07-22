@@ -6,7 +6,7 @@ def write_new_js(data, file_name):
 
 
 def open_load_file(file_name):
-    file = open('{}.json'.format(file_name))
+    file = open('{}.json'.format(file_name), 'r+')
     return json.load(file), file
 
 
