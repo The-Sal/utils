@@ -1,4 +1,5 @@
 import os
+from .paths import *
 
 def get_current_home_dir():
     return os.path.expanduser('~')
