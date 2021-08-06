@@ -1,3 +1,6 @@
+import os
+import shutil
+
 def get_last_component(string:str):
     Broken = string.split('/')
     length = len(Broken)
@@ -30,3 +33,32 @@ def basePath(URL):
         NewPath = NewPath + '/' + path
 
     return NewPath
+
+
+def file_exists(path):
+    return os.path.isfile(path)
+
+def directory_exists(path):
+    return os.path.isdir(path)
+
+def os_walk(file_name, path):
+    for r, d, f in os.walk(path):
+        for file in f:
+            if file == file_name:
+                return os.path.abspath(os.path.join(r, file))
+
+
+def copy(src, dst):
+    if os.path.isdir(src):
+        if dst.endswith('/'):
+            dst = dst + get_last_component(src)
+        elif not dst.endswith('/'):
+            dst = dst + '/' + get_last_component(src)
+        return shutil.copytree(src=src, dst=dst)
+    else:
+        return shutil.copy(src=src, dst=dst)
+
+
+if __name__ == '__main__':
+    # To debug
+    pass

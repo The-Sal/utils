@@ -9,8 +9,8 @@ class requests_session:
         else:
             return self.ses.get(url)
 
-    def post(self, url, data=None, json=None):
-        return self.ses.post(url=url, data=data, json=json)
+    def post(self, url, data=None, json=None, headers=None):
+        return self.ses.post(url=url, data=data, json=json, headers=headers)
 
     def session(self):
         return self.ses
