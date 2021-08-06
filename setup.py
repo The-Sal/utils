@@ -1,7 +1,7 @@
 import setuptools
 import utils
 setuptools.setup(
-     name='utils',
+     name='utils-SF',
      version=utils.version,
      author="Sal Faris",
      description="Utility functions",
