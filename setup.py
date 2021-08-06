@@ -10,7 +10,7 @@ setuptools.setup(
           'requests'
      ],
      license='MIT',
-     author_email = '...',
+     author_email = 'salmanfaris2005@hotmail.com',
      url = 'https://github.com/The-Sal/utils/',
      download_url = 'https://github.com/The-Sal/utils/archive/refs/tags/v1.6.tar.gz',
 
