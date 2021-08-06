@@ -5,7 +5,15 @@ setuptools.setup(
      version=utils.version,
      author="Sal Faris",
      description="Utility functions",
-     packages=setuptools.find_packages()
+     packages=setuptools.find_packages(),
+     Install_requires = [
+          'requests'
+     ],
+     license='MIT',
+     author_email = '...',
+     url = 'https://github.com/The-Sal/utils/',
+     download_url = 'https://github.com/The-Sal/utils/archive/refs/tags/v1.6.tar.gz',
+
 )
 
 
