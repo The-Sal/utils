@@ -58,6 +58,22 @@ def copy(src, dst):
     else:
         return shutil.copy(src=src, dst=dst)
 
+def join(path1: str, path2: str):
+    if path1.endswith('/'):
+        path1 = path1[:-1]
+
+    if path2.endswith('/'):
+        path2 = path2[:-1]
+
+    if not path1.startswith('/'):
+        path1 = '/' + path1
+
+    if not path2.startswith('/'):
+        path2 = '/' + path2
+
+    path = path1 + path2
+    return path
+
 
 if __name__ == '__main__':
     pass

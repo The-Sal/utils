@@ -1,16 +1,22 @@
 import requests
 class requests_session:
-    def __init__(self):
+    def __init__(self, optional_func=None):
         self.ses = requests.Session()
+        self.function = optional_func
 
     def get(self, url, Head=None):
-        if Head is not None:
-            return self.ses.get(url, headers=Head)
-        else:
-            return self.ses.get(url)
+        response = self.ses.get(url, headers=Head)
+        if not self.function is None:
+            self.function(response)
+
+        return response
 
     def post(self, url, data=None, json=None, headers=None):
-        return self.ses.post(url=url, data=data, json=json, headers=headers)
+        request = self.ses.post(url=url, data=data, json=json, headers=headers)
+        if self.function is not None:
+            self.function(request)
+
+        return request
 
     def session(self):
         return self.ses
@@ -22,10 +28,19 @@ class requests_session:
             hooks=None,verify=None,
             json=None):
 
-        return self.ses.request(url=url,method=method, proxies=proxies,
+        request = self.ses.request(url=url,method=method, proxies=proxies,
                                 params=params, data=data, headers=headers,
                                 cookies=cookies, files=files, auth=auth, timeout=timeout,
                                 allow_redirects=allow_redirects, hooks=hooks, verify=verify, json=json)
+
+        if self.function is not None:
+            self.function(request)
+
+        return request
+
+    def change_optional_func(self, function):
+        self.function = function
+
 
 def waste():
     pass

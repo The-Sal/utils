@@ -10,29 +10,31 @@ def thread(func, args):
     Obj.start()
     return Obj
 
-def multiple_threads(funcs:list, args:list):
+def multiple_threads(function_data):
     """
-    :param funcs:
     Functions must be in a list like so [function1, function2, function3]
-    :param args:
-    The arguments must be a list containing a list of args per function
-    like so [[arg1forfunction1, arg2forfunction1],[arg1forfunction2, arg2forfunction2], ...]
-    The arguments list and the function must be have the same index in both list for a function without
-    args the list can be done like so [None]
+    :param function_data:
+
+    List of Dictionary like so
+    function_data = [
+        {
+        'function' : function
+        'args' : [arg1, arg2]
+        }
+    ]
+
     :return:
     A list of all the started threads
     """
     x = 0
     Objs = []
-    for f in funcs:
-        if args[x][0] == None:
-            Obj = threading.Thread(target=f)
-        else:
-            Obj = threading.Thread(target=f, args=args[x])
+    for f in function_data:
+        Args = f['args']
+        if Args == None:
+            Args = [None]
 
-        Objs.append(Obj)
-
-        x = x + 1
+        Function = f['function']
+        Objs.append(threading.Thread(target=Function, args=Args))
 
 
     for o in Objs:
