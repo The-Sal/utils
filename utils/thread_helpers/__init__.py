@@ -31,7 +31,7 @@ def multiple_threads(function_data):
     for f in function_data:
         Args = f['args']
         if Args == None:
-            Args = [None]
+            Args = []
 
         Function = f['function']
         Objs.append(threading.Thread(target=Function, args=Args))
