@@ -7,8 +7,10 @@ def get_current_home_dir():
 
 
 def execute_capture(command):
-    os_exec = os.popen(command).read()
-    return os_exec
+    os_exec = os.popen(command)
+    Read = os_exec.read()
+    os_exec.detach()
+    return Read
 
 
 def get_ip():
