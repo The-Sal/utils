@@ -18,5 +18,5 @@ setuptools.setup(
     license='MIT',
     author_email='salmanfaris2005@hotmail.com',
     url='https://github.com/The-Sal/utils/',
-    download_url='https://github.com/The-Sal/utils/archive/refs/tags/v1.6.3.tar.gz'
+    download_url='https://github.com/The-Sal/utils/archive/refs/tags/v1.6.4.tar.gz'
 )
