@@ -1,11 +1,14 @@
 import threading
 
-def thread(func, args):
+def thread(func, args=None):
     '''
     Must be a function in without ()
     example if the function is def hello():
     thread would be called like so thread(func=hello, args=['argument1', 'argument2']
     '''
+    if args is None:
+        args = []
+
     Obj = threading.Thread(target=func, args=args)
     Obj.start()
     return Obj
