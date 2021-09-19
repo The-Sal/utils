@@ -1,6 +1,7 @@
 import setuptools
 from utils import version
-reqs = open('requirements.txt', 'r+').read().split()
+reqs = ['requests>=2.26.0',
+        'setuptools>=57.0.0']
 
 setuptools.setup(
     name='utils-S',
