@@ -60,6 +60,7 @@ class animate_iteration:
 
                     stdout.flush()
                     sleep(selfClass.delay)
+                    stdout.write('\r' + ' ' * len(self.prefix + ' ' + selfClass.static + ' ' + animation))
 
         thread_helpers.thread(func=animate, args=[self])
 
