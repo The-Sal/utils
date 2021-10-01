@@ -79,43 +79,20 @@ def join(path1: str, path2: str):
     return path
 
 
-class PathObject:
-    """
-    -- PathObject --
-    attempt to emulate the URL type in swift,
-    allows for relatively similar functionality in pure python
-    also allowing more flexibility and error corrections when joining or appending paths together
-    """
+class Path:
     def __init__(self, path):
         path = str(path)
         if not path.startswith('/'):
             path = '/' + path
 
         path.replace(" ", "")
-
         self.path = path
 
-    def append(self, new_path):
-        self.path = join(self.path, new_path)
-
-    def isPath(self):
-        if file_exists(self.path) or directory_exists(self.path):
-            return True
-        else:
-            return False
-
-    def BasePath(self):
-        return basePath(self.path)
+    def append(self, path2):
+        return Path(join(self.path, path2))
 
     def last_component(self):
         return get_last_component(self.path)
-
-    def strip_last(self):
-        self.path = basePath(self.path)
-
-    def write_to(self, WritingData, OpenMode):
-        with open(self.path, OpenMode) as file:
-            file.write(WritingData)
 
     def rename(self, name):
         src = self.path
@@ -123,6 +100,20 @@ class PathObject:
         os.rename(src=src, dst=dst)
         self.path = dst
 
+        return Path(self.path)
+
+    def write_to(self, WritingData, OpenMode):
+        with open(self.path, OpenMode) as file:
+            file.write(WritingData)
+
+    def isPath(self):
+        if file_exists(self.path) or directory_exists(self.path):
+            return True
+        else:
+            return False
+
+    def basePath(self):
+        return basePath(self.path)
 
 if __name__ == '__main__':
     pass
