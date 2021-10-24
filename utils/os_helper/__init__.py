@@ -15,7 +15,10 @@ def execute_capture(command):
 
 
 def get_ip():
-    return os.popen('ipconfig getifaddr en0').read()[:-1]
+    p = os.popen('ipconfig getifaddr en0')
+    ip = p.read()[:-1]
+    p.close()
+    return ip
 
 
 def waste():
