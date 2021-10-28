@@ -10,6 +10,7 @@ class animate_iteration:
         """
         :param animationList:
         Any list of string will be iterated through
+        if the animation list is set to ['default'] automatically use ['/', '-', '\\', '|']
         :param static:
         prints right before animation list
         :param prefix:
@@ -22,6 +23,9 @@ class animate_iteration:
         color of the animation
         available colors ['red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
         """
+        if animationList[0] == "default":
+            animationList = ['/', '-', '\\', '|']
+
         self.animation = animationList
         self.delay = delay
         self.static = static
@@ -60,7 +64,12 @@ class animate_iteration:
 
                     stdout.flush()
                     sleep(selfClass.delay)
-                    stdout.write('\r' + ' ' * len(self.prefix + ' ' + selfClass.static + ' ' + animation))
+
+                    if self.prefix is not None:
+                        stdout.write('\r' + ' ' * len(self.prefix + ' ' + selfClass.static + ' ' + animation))
+                    else:
+                        stdout.write('\r' + ' ' * len(selfClass.static + ' ' + animation))
+
 
         thread_helpers.thread(func=animate, args=[self])
 
@@ -89,23 +98,23 @@ class animate_iteration:
 
 if __name__ == '__main__':
     # for debugging
-    """animations = ['/', '-', '\\', '|']
-    a = animate_iteration(animationList=animations, static='Animatingggggg',
-                          completion='Hello Bye', prefix='[Static]',
-                          textColour='red')
-    a.start_animation()
-    sleep(1)
-
-    a.change_color(color='green')
-    a.change_prefix(prefix='[SOOO]')
-    a.change_static('FOoo')
-    a.change_animation_list(animationList=['a', 'b', 'c'])
-
-    sleep(3)
-
-    a.stop_animation()
-
-    sleep(1)
-
-    print('end')"""
+    # animations = ['/', '-', '\\', '|']
+    # a = animate_iteration(animationList=animations, static='Animatingggggg',
+    #                       completion='Hello Bye', prefix='[Static]',
+    #                       textColour='red')
+    # a.start_animation()
+    # sleep(1)
+    #
+    # a.change_color(color='green')
+    # a.change_prefix(prefix='[SOOO]')
+    # a.change_static('FOoo')
+    # a.change_animation_list(animationList=['a', 'b', 'c'])
+    #
+    # sleep(3)
+    #
+    # a.stop_animation()
+    #
+    # sleep(1)
+    #
+    # print('end')
     pass

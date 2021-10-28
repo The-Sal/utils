@@ -85,7 +85,13 @@ class Path:
         if not path.startswith('/'):
             path = '/' + path
 
-        path.replace(" ", "")
+        if path.endswith('/'):
+            path.removesuffix('/')
+
+        if path.endswith(' '):
+            path = path.removesuffix(' ')
+
+
         self.path = path
 
     def append(self, path2):

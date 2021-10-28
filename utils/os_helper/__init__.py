@@ -14,20 +14,21 @@ def execute_capture(command):
     return Read
 
 
-def get_ip():
-    p = os.popen('ipconfig getifaddr en0')
-    ip = p.read()[:-1]
-    p.close()
-    return ip
 
-
-def waste():
-    pass
-
-
-def command(args: list, quite=False):
+def command(args: list, quite=False, read=False):
     if quite:
         sub = subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+
+    elif read:
+        sub = subprocess.Popen(args, stdout=subprocess.PIPE, stdin=subprocess.PIPE,
+                               stderr=subprocess.STDOUT)
+
+        response = sub.communicate()[0].decode('utf8')
+        sub.wait()
+        sub.poll()
+        returnCode = int(sub.returncode)
+
+        return response, returnCode, sub
     else:
         sub = subprocess.Popen(args)
 
@@ -38,3 +39,9 @@ def command(args: list, quite=False):
 
 def remove(file):
     command(args=['rm', '-rf', file])
+
+
+def get_ip():
+    ip = command(['ipconfig', 'getifaddr', 'en0'], read=True)
+    return ip[0].removesuffix('\n')
+
