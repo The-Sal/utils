@@ -2,6 +2,18 @@ import os
 import shutil
 
 
+def _decoder(string_path: str) -> str:
+    if string_path.startswith('~'):
+        string_path = join(os.path.expanduser('~'), string_path.split('~', 1)[1])
+
+    if not string_path.__contains__('\\'):
+        return string_path
+
+    string_path = string_path.replace('\\', '')
+
+    return string_path
+
+
 def get_last_component(string: str):
     Broken = string.split('/')
     length = len(Broken)
@@ -81,7 +93,8 @@ def join(path1: str, path2: str):
 
 class Path:
     def __init__(self, path):
-        path = str(path)
+        path = _decoder(path)
+
         if not path.startswith('/'):
             path = '/' + path
 
@@ -112,6 +125,13 @@ class Path:
         with open(self.path, OpenMode) as file:
             file.write(WritingData)
 
+
+    def read_file(self, OpenMode):
+        with open(self.path, OpenMode) as file:
+            file_read = file.read()
+
+        return file_read
+
     def isPath(self):
         if file_exists(self.path) or directory_exists(self.path):
             return True
@@ -120,6 +140,7 @@ class Path:
 
     def basePath(self):
         return basePath(self.path)
+
 
 if __name__ == '__main__':
     pass
