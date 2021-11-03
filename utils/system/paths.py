@@ -14,7 +14,7 @@ def _decoder(string_path: str) -> str:
     return string_path
 
 
-def get_last_component(string: str):
+def last_component(string: str):
     Broken = string.split('/')
     length = len(Broken)
 
@@ -56,19 +56,39 @@ def directory_exists(path):
     return os.path.isdir(path)
 
 
-def os_walk(file_name, path):
-    for r, d, f in os.walk(path):
-        for file in f:
-            if file == file_name:
-                return os.path.abspath(os.path.join(r, file))
+def os_walk(file_name, path, custom_function=None):
+    """
+    custom_function is a function which should return True
+    if the file passed is the wanted file
+
+    i.e.
+    def function(file):
+        if file.endswith('.wav'):
+        return True
+
+    in this example the first file that ends with a .wav extension will be returned
+    """
+    if custom_function is None:
+        for r, d, f in os.walk(path):
+            for file in f:
+                if file == file_name:
+                    return os.path.abspath(os.path.join(r, file))
+
+    else:
+        for r, d, f in os.walk(path):
+            for file in f:
+                if custom_function(file):
+                    return os.path.abspath(os.path.join(r, file))
+
+        return None
 
 
 def copy(src, dst):
     if os.path.isdir(src):
         if dst.endswith('/'):
-            dst = dst + get_last_component(src)
+            dst = dst + last_component(src)
         elif not dst.endswith('/'):
-            dst = dst + '/' + get_last_component(src)
+            dst = dst + '/' + last_component(src)
         return shutil.copytree(src=src, dst=dst)
     else:
         return shutil.copy(src=src, dst=dst)
@@ -89,6 +109,23 @@ def join(path1: str, path2: str):
 
     path = path1 + path2
     return path
+
+def remove_file(file, is_directory=False):
+
+    if not file_exists(file) or directory_exists(file):
+        raise FileNotFoundError('Unable to find file')
+
+    if directory_exists(file) != is_directory:
+        raise IsADirectoryError('To remove a directory set is_directory=True')
+
+    if not is_directory:
+        os.remove(file)
+    else:
+        try:
+            os.removedirs(file)
+        except OSError:
+            from utils.system import command
+            command(['rm', '-rf', file])
 
 
 class Path:
@@ -111,7 +148,7 @@ class Path:
         return Path(join(self.path, path2))
 
     def last_component(self):
-        return get_last_component(self.path)
+        return last_component(self.path)
 
     def rename(self, name):
         src = self.path
@@ -140,6 +177,36 @@ class Path:
 
     def basePath(self):
         return basePath(self.path)
+
+    def __abs__(self):
+        return self.path
+
+    def __len__(self):
+        if directory_exists(self.path):
+            return len(os.listdir(self.path))
+        elif file_exists(self.path):
+            return 1
+        else:
+            raise FileNotFoundError(self.path)
+
+    def __add__(self, other):
+        return abs(self) + other
+
+    def __bool__(self):
+        return self.isPath()
+
+    def __iter__(self):
+        if self.isPath():
+            if directory_exists(abs(self)):
+                return iter(os.listdir(self.path))
+            else:
+                return iter([])
+        else:
+            raise FileNotFoundError(self.path)
+
+
+
+
 
 
 if __name__ == '__main__':

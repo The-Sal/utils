@@ -1,19 +1,8 @@
-from . import paths
-import os
 import subprocess
+import os
 
-
-def get_current_home_dir():
+def HomeDirectory():
     return os.path.expanduser('~')
-
-
-def execute_capture(command):
-    os_exec = os.popen(command)
-    Read = os_exec.read()
-    os_exec.detach()
-    return Read
-
-
 
 def command(args: list, quite=False, read=False):
     if quite:
@@ -36,12 +25,8 @@ def command(args: list, quite=False, read=False):
     sub.kill()
     sub.terminate()
 
-
-def remove(file):
-    command(args=['rm', '-rf', file])
-
-
-def get_ip():
-    ip = command(['ipconfig', 'getifaddr', 'en0'], read=True)
-    return ip[0].removesuffix('\n')
+def ip_address(interface='en0'):
+    ip = command(['ipconfig', 'getifaddr', interface], read=True)
+    ip = ip[0].removesuffix('\n')
+    return ip
 
