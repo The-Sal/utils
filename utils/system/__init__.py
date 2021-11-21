@@ -1,5 +1,7 @@
+import signal
 import subprocess
 import os
+from . import paths
 
 def HomeDirectory():
     return os.path.expanduser('~')
@@ -30,3 +32,19 @@ def ip_address(interface='en0'):
     ip = ip[0].removesuffix('\n')
     return ip
 
+def hostname():
+    import socket
+    return socket.gethostname()
+
+def remove(file):
+    command(['rm', '-rf', file])
+
+def kill_process(pid):
+    if not isinstance(pid, int):
+        pid = int(pid)
+    os.kill(pid, signal.SIGTERM)
+
+
+
+if __name__ == '__main__':
+    pass

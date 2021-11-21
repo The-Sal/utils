@@ -1,6 +1,13 @@
 import os
 import shutil
+import subprocess
+from utils import exceptions
 
+def __command(args: list):
+    sub = subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+    sub.wait()
+    sub.kill()
+    sub.terminate()
 
 def _decoder(string_path: str) -> str:
     if string_path.startswith('~'):
@@ -110,22 +117,13 @@ def join(path1: str, path2: str):
     path = path1 + path2
     return path
 
-def remove_file(file, is_directory=False):
 
-    if not file_exists(file) or directory_exists(file):
-        raise FileNotFoundError('Unable to find file')
-
-    if directory_exists(file) != is_directory:
-        raise IsADirectoryError('To remove a directory set is_directory=True')
-
-    if not is_directory:
-        os.remove(file)
+def remove(file):
+    # pure python way to remove files
+    if os.path.isdir(file):
+        shutil.rmtree(file)
     else:
-        try:
-            os.removedirs(file)
-        except OSError:
-            from utils.system import command
-            command(['rm', '-rf', file])
+        os.remove(file)
 
 
 class Path:
@@ -181,6 +179,9 @@ class Path:
     def __abs__(self):
         return self.path
 
+    def __str__(self):
+        return abs(self)
+
     def __len__(self):
         if directory_exists(self.path):
             return len(os.listdir(self.path))
@@ -206,7 +207,10 @@ class Path:
 
 
 
-
+# Depreciated Functions
+def remove_file(file, blank):
+    # _command(['rm', '-rf', file])
+    raise exceptions.DepreciatedFunction(__file__, 'remove_file')
 
 
 if __name__ == '__main__':
