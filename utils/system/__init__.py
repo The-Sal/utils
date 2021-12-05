@@ -29,7 +29,12 @@ def command(args: list, quite=False, read=False):
 
 def ip_address(interface='en0'):
     ip = command(['ipconfig', 'getifaddr', interface], read=True)
-    ip = ip[0].removesuffix('\n')
+    try:
+        ip = ip[0].removesuffix('\n')
+    except AttributeError or Exception:
+        if ip[0].endswith('\n'):
+            ip = ip[0][:-1]
+
     return ip
 
 def hostname():

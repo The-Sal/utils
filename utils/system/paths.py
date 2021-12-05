@@ -134,10 +134,17 @@ class Path:
             path = '/' + path
 
         if path.endswith('/'):
-            path.removesuffix('/')
+            try:
+                path = path.removesuffix('/')
+            except AttributeError or Exception:
+                path = path[:-1]
 
         if path.endswith(' '):
-            path = path.removesuffix(' ')
+            try:
+                path = path.removesuffix(' ')
+            except AttributeError or Exception:
+                path = path[:-1]
+
 
 
         self.path = path
