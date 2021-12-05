@@ -1,7 +1,7 @@
 import setuptools
 reqs = ['requests',
         'termcolor']
-version = '2.5'
+version = '2.7'
 
 setuptools.setup(
     name='utils-s',
