@@ -1,3 +1,4 @@
+import os
 from sys import stdout
 from time import sleep
 from utils import thread_helpers
@@ -65,10 +66,14 @@ class animate_iteration:
                     stdout.flush()
                     sleep(selfClass.delay)
 
-                    if self.prefix is not None:
-                        stdout.write('\r' + ' ' * len(self.prefix + ' ' + selfClass.static + ' ' + animation))
-                    else:
-                        stdout.write('\r' + ' ' * len(selfClass.static + ' ' + animation))
+
+                    try:
+                        stdout.write('\r' + str(' ' * os.get_terminal_size()[0]))
+                    except OSError:
+                        if self.prefix is not None:
+                            stdout.write('\r' + ' ' * len(self.prefix + ' ' + selfClass.static + ' ' + animation))
+                        else:
+                            stdout.write('\r' + ' ' * len(selfClass.static + ' ' + animation))
 
 
         thread_helpers.thread(func=animate, args=[self])
