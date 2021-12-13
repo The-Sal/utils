@@ -1,13 +1,16 @@
 import os
+import random
 import shutil
 import subprocess
 from utils import exceptions
+
 
 def __command(args: list):
     sub = subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
     sub.wait()
     sub.kill()
     sub.terminate()
+
 
 def _decoder(string_path: str) -> str:
     if string_path.startswith('~'):
@@ -145,8 +148,6 @@ class Path:
             except AttributeError or Exception:
                 path = path[:-1]
 
-
-
         self.path = path
 
     def append(self, path2):
@@ -166,7 +167,6 @@ class Path:
     def write_to(self, WritingData, OpenMode):
         with open(self.path, OpenMode) as file:
             file.write(WritingData)
-
 
     def read_file(self, OpenMode):
         with open(self.path, OpenMode) as file:
@@ -212,6 +212,17 @@ class Path:
         else:
             raise FileNotFoundError(self.path)
 
+
+class container:
+    def __init__(self):
+        self.file = Path(join(os.getcwd(), random.random().__str__()))
+
+    def __enter__(self):
+        os.mkdir(abs(self.file))
+        return self.file
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        remove(self.file)
 
 
 # Depreciated Functions
