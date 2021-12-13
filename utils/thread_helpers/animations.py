@@ -1,3 +1,4 @@
+import os
 from sys import stdout
 from time import sleep
 from utils import thread_helpers
@@ -53,6 +54,13 @@ class animate_iteration:
                     if self.completion is not None:
                         self._clear_screen()
                         self._mutate_animation(completion=True)
+
+                        try:
+                            if self.prefix is None:
+                                self.prefix = ''
+                        except TypeError:
+                            self.prefix = ''
+
                         print('\r' + self.prefix, self.completion)
                     break
 
@@ -65,10 +73,14 @@ class animate_iteration:
                     stdout.flush()
                     sleep(selfClass.delay)
 
-                    if self.prefix is not None:
-                        stdout.write('\r' + ' ' * len(self.prefix + ' ' + selfClass.static + ' ' + animation))
-                    else:
-                        stdout.write('\r' + ' ' * len(selfClass.static + ' ' + animation))
+
+                    try:
+                        stdout.write('\r' + str(' ' * os.get_terminal_size()[0]))
+                    except OSError:
+                        if self.prefix is not None:
+                            stdout.write('\r' + ' ' * len(self.prefix + ' ' + selfClass.static + ' ' + animation))
+                        else:
+                            stdout.write('\r' + ' ' * len(selfClass.static + ' ' + animation))
 
 
         thread_helpers.thread(func=animate, args=[self])
@@ -83,7 +95,10 @@ class animate_iteration:
         self._mutate_animation()
 
     def _clear_screen(self):
-        stdout.write('\r' + ' ' * len(self.static))
+        try:
+            stdout.write('\r' + str(' ' * os.get_terminal_size()[0]))
+        except:
+            stdout.write('\r' + ' ' * len(self.static))
 
     def change_animation_list(self, animationList: list):
         self.animation = animationList
