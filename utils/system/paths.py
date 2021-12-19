@@ -215,7 +215,8 @@ class Path:
 
 class container:
     def __init__(self):
-        self.file = Path(join(os.getcwd(), random.random().__str__()))
+        self.old_cwd = os.getcwd()
+        self.file = Path(join(self.old_cwd, random.random().__str__()))
 
     def __enter__(self):
         os.mkdir(abs(self.file))
@@ -223,6 +224,7 @@ class container:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         remove(self.file)
+        os.chdir(self.old_cwd)
 
 
 # Depreciated Functions
