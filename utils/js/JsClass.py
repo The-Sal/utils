@@ -1,7 +1,7 @@
 import json
 from os import path
 from utils.system.paths import Path
-from utils.js.Js_exception import badJSON
+from utils.exceptions.Js_exception import badJSON
 
 class JsHandler:
     def __init__(self, file_name):
