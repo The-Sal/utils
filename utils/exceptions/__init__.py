@@ -1,14 +1,14 @@
-# gobal unspecifc exceptions
-class utlityErrors(Exception):
+# global unspecific exceptions
+class utilityErrors(Exception):
     pass
 
-class pathError(utlityErrors):
+class pathError(utilityErrors):
     pass
 
-class Depreciated(utlityErrors):
+class Depreciated(utilityErrors):
     pass
 
 class DepreciatedFunction(Exception):
     def __init__(self, source, function_name):
-        errmsg = """The function .{}() from {} is depreicated""".format(function_name, source)
+        errmsg = """The function .{}() from {} is deprecated""".format(function_name, source)
         raise Depreciated(errmsg)
