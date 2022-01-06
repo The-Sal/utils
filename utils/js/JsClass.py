@@ -3,6 +3,7 @@ from os import path
 from utils.system.paths import Path
 from utils.exceptions.Js_exception import badJSON
 
+
 class JsHandler:
     def __init__(self, file_name):
         if isinstance(file_name, Path):
