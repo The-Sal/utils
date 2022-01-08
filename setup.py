@@ -1,9 +1,5 @@
 import setuptools
-
-Req = ['requests',
-       'termcolor']
-
-version = '3.0'
+version = '3.1'
 
 setuptools.setup(
     name='utils-s',
@@ -12,5 +8,4 @@ setuptools.setup(
     description="Utility functions",
     packages=setuptools.find_packages(),
     url='https://github.com/The-Sal/utils/',
-    install_requires=Req
 )

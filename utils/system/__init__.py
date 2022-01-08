@@ -3,8 +3,10 @@ import subprocess
 import os
 from . import paths
 
+
 def HomeDirectory():
     return os.path.expanduser('~')
+
 
 def command(args: list, quite=False, read=False):
     if quite:
@@ -27,6 +29,7 @@ def command(args: list, quite=False, read=False):
     sub.kill()
     sub.terminate()
 
+
 def ip_address(interface='en0'):
     ip = command(['ipconfig', 'getifaddr', interface], read=True)
     try:
@@ -37,18 +40,20 @@ def ip_address(interface='en0'):
 
     return ip
 
+
 def hostname():
     import socket
     return socket.gethostname()
 
+
 def remove(file):
     command(['rm', '-rf', file])
+
 
 def kill_process(pid):
     if not isinstance(pid, int):
         pid = int(pid)
     os.kill(pid, signal.SIGTERM)
-
 
 
 if __name__ == '__main__':

@@ -2,7 +2,10 @@ import os
 from sys import stdout
 from time import sleep
 from utils import thread_helpers
+from utils.internal import depends
+depends.attemptImport(packagePythonName='termcolor', packagePip3Name='termcolor')
 from termcolor import colored
+
 
 
 
@@ -97,7 +100,7 @@ class animate_iteration:
     def _clear_screen(self):
         try:
             stdout.write('\r' + str(' ' * os.get_terminal_size()[0]))
-        except:
+        except OSError:
             stdout.write('\r' + ' ' * len(self.static))
 
     def change_animation_list(self, animationList: list):

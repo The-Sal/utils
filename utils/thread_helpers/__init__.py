@@ -1,18 +1,20 @@
 import threading
 from utils.thread_helpers.animations import animate_iteration
 
+
 def thread(func, args=None, daemon=True):
-    '''
+    """
     Must be a function in without ()
     example if the function is def hello():
     thread would be called like so thread(func=hello, args=['argument1', 'argument2']
-    '''
+    """
     if args is None:
         args = []
 
     Obj = threading.Thread(target=func, args=args, daemon=daemon)
     Obj.start()
     return Obj
+
 
 def multiple_threads(function_data, daemon=True):
     """
@@ -32,20 +34,16 @@ def multiple_threads(function_data, daemon=True):
     :return:
     A list of all the started threads
     """
-    x = 0
-    Objs = []
+    obj_s = []
     for f in function_data:
         Args = f['args']
-        if Args == None:
+        if Args is None:
             Args = []
 
         Function = f['function']
-        Objs.append(threading.Thread(target=Function, args=Args, daemon=daemon))
+        obj_s.append(threading.Thread(target=Function, args=Args, daemon=daemon))
 
-
-    for o in Objs:
+    for o in obj_s:
         o.start()
 
-
-    return Objs
-
+    return obj_s

@@ -2,11 +2,14 @@
 class utilityErrors(Exception):
     pass
 
+
 class pathError(utilityErrors):
     pass
 
+
 class Depreciated(utilityErrors):
     pass
+
 
 class DepreciatedFunction(Exception):
     def __init__(self, source, function_name):
