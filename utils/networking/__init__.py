@@ -1,5 +1,5 @@
-from utils.internal import depends
-depends.attemptImport(packagePythonName='requests', packagePip3Name='requests')
+from utils import internal
+internal.depends.attemptImport(packagePythonName='requests', packagePip3Name='requests')
 import requests
 
 
