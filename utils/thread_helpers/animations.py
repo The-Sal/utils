@@ -10,7 +10,8 @@ from termcolor import colored
 
 
 class animate_iteration:
-    def __init__(self, animationList: list, static: str, prefix=None, completion=None, delay=0.2, textColour=None):
+    def __init__(self, static: str, animationList: list = ('/', '-', '\\', '|'), prefix=None, completion=None,
+                 delay=0.2, textColour=None):
         """
         :param animationList:
         Any list of string will be iterated through
