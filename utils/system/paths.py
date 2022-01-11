@@ -2,7 +2,6 @@ import os
 import random
 import shutil
 import subprocess
-from utils import exceptions
 
 
 def __command(args: list):
@@ -213,7 +212,7 @@ class Path:
             raise FileNotFoundError(self.path)
 
 
-class container:
+class Container:
     def __init__(self):
         self.old_cwd = os.getcwd()
         self.file = Path(join(self.old_cwd, random.random().__str__()))
@@ -223,14 +222,12 @@ class container:
         return self.file
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        remove(self.file)
+        remove(self.file.path)
         os.chdir(self.old_cwd)
 
 
-# Depreciated Functions
-def remove_file(file, blank):
-    # _command(['rm', '-rf', file])
-    raise exceptions.DepreciatedFunction(__file__, 'remove_file')
+# backward compatibility
+container = Container
 
 
 if __name__ == '__main__':

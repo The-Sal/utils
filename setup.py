@@ -1,5 +1,5 @@
 import setuptools
-version = '3.3'
+version = '3.4'
 
 setuptools.setup(
     name='utils-s',
@@ -7,5 +7,5 @@ setuptools.setup(
     author="Sal Faris",
     description="Utility functions",
     packages=setuptools.find_packages(),
-    url='https://github.com/The-Sal/utils/',
+    url='https://github.com/The-Sal/utils/'
 )
