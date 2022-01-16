@@ -2,7 +2,7 @@ import os
 from sys import stdout
 from time import sleep
 from utils import thread_helpers
-from utils.internal import depends
+from utils._internal import depends
 depends.attemptImport(packagePythonName='termcolor', packagePip3Name='termcolor')
 from termcolor import colored
 

@@ -218,7 +218,8 @@ class Container:
         self.file = Path(join(self.old_cwd, random.random().__str__()))
 
     def __enter__(self):
-        os.mkdir(abs(self.file))
+        os.mkdir(self.file.path)
+        os.chdir(self.file.path)
         return self.file
 
     def __exit__(self, exc_type, exc_val, exc_tb):
