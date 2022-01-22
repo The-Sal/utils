@@ -1,6 +1,8 @@
+import os
+import sys
+import random
 import signal
 import subprocess
-import os
 from . import paths
 
 
@@ -54,6 +56,37 @@ def kill_process(pid):
     if not isinstance(pid, int):
         pid = int(pid)
     os.kill(pid, signal.SIGTERM)
+
+
+class CaptureSTDOUT:
+    def __init__(self):
+        self.rnSTD = sys.stdout
+        self.newStd = '.' + random.random().__str__() + '.std'
+        self.newStdFile = open(self.newStd, 'w+')
+
+        self.data = None
+
+    def startCapture(self):
+        sys.stdout = self.newStdFile
+
+    def stopCapture(self):
+        sys.stdout = self.rnSTD
+        self.newStdFile.close()
+
+        file = open(self.newStd, 'rb+')
+        content = file.read().decode()
+        file.close()
+        remove(self.newStd)
+        self.data = content
+
+    def readCapture(self):
+        return self.data
+
+    def __enter__(self):
+        self.startCapture()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.stopCapture()
 
 
 if __name__ == '__main__':
