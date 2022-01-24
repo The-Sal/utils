@@ -1,4 +1,6 @@
 import json
+
+
 def write_new_js(data, file_name):
     with open('{}.json'.format(file_name), 'w+') as file:
         file.seek(0)
@@ -19,9 +21,11 @@ def update_dict(data, file_name):
         json.dump(JsF, file, indent=4)
         file.close()
 
+
 def dump_js_to_file(file, Js):
     file.seek(0)
     json.dump(Js, file, indent=4)
+
 
 def append_to_list(list_key, file_name, list_data_append):
     s = open_load_file(file_name)
@@ -41,6 +45,7 @@ def get_values_list(file_name, key=None):
         return Js[key]
     else:
         return Js
+
 
 def waste():
     pass
