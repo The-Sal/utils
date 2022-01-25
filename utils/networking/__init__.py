@@ -1,6 +1,8 @@
 from utils import _internal
 _internal.depends.attemptImport(packagePythonName='requests', packagePip3Name='requests')
+
 import requests
+from utils.networking.downloadAdapter import adapter as _adapter_dl
 
 
 class requests_session:
@@ -59,6 +61,28 @@ class requests_session:
     def change_constant_header(self, new_header):
         self.const_head = new_header
 
+    def injectCookie(self, name, value):
+        self.ses.cookies.set(name=name, value=value)
+
+    @staticmethod
+    def progressGet(filename: str, url: str):
+        return _adapter_dl(url=url).download(filename=filename)
+
+    @property
+    def downloadAdapter(self):
+        return _adapter_dl
+
 
 def waste():
+    pass
+
+
+if __name__ == '__main__':
+    # get = requests_session().progressGet(filename='Audio.mp3', url="")
+    #
+    # import sys
+    #
+    # while get.downloadThread.is_alive():
+    #     sys.stdout.write('\r' + get.percentageCompleted.__round__(2).__str__() + '%')
+    #     sys.stdout.flush()
     pass
