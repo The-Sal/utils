@@ -62,11 +62,12 @@ class CaptureSTDOUT:
     def __init__(self):
         self.rnSTD = sys.stdout
         self.newStd = '.' + random.random().__str__() + '.std'
-        self.newStdFile = open(self.newStd, 'w+')
+        self.newStdFile = None
 
         self.data = None
 
     def startCapture(self):
+        self.newStdFile = open(self.newStd, 'w+')
         sys.stdout = self.newStdFile
 
     def stopCapture(self):
