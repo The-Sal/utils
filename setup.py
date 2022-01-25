@@ -1,5 +1,5 @@
 import setuptools
-version = '3.6'
+version = '3.7'
 
 setuptools.setup(
     name='utils-s',
